@@ -1,0 +1,17 @@
+.LeftBarStyle-Show{
+    border: solid black;
+    width: 20%;
+    height: 90%;
+    position: absolute;
+    top: 5.4%;
+    display: block;
+}
+
+.LeftBarStyle-Hide{
+    border: solid black;
+    width: 20%;
+    height: 90%;
+    position: absolute;
+    top: 5.4%;
+    display: none;
+}
