@@ -85,13 +85,11 @@ const AddATaskBtnState = (props) => {
   const setaddTaskValue = props.setaddTaskValue;
 
   const handleIsActive = () => setIsActive(!isActive);
-console.log(dropdownRef.current)
   useEffect(() => {
     const handlePageClicked = (e) =>{
       console.log(e)
-      if(dropdownRef.current !== null && !dropdownRef.current.contains(e.target)){
+      if(dropdownRef.current !== null){
         setIsActive(!isActive)
-        console.log("si")
       }
     }
     if(isActive){
