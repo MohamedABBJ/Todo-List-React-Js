@@ -20,7 +20,6 @@
 .TodoListElements{
     text-align: center;
 }
-
 .dropDownContainer{
     border: solid black;
     position: absolute;
@@ -28,6 +27,7 @@
     right: 250px;
     top: 20px;
 }
+
 .menu{
     visibility: hidden;
 }

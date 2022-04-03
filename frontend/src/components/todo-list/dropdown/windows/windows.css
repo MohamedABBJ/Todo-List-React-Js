@@ -1,0 +1,10 @@
+.editWindowStyle{
+    position: absolute;
+    border: solid black;
+    top: 30%;
+    left: 30%;
+    right: 50%;
+    width: 400px;
+    height: 90px;
+    visibility:visible;
+}
