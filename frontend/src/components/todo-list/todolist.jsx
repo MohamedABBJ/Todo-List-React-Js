@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import "./todolist.css";
 
 export const TodoList = (props) => {
-  const [addTaskValue, setaddTaskValue] = useState('')
-  const [taskValueArray, settaskValueArray] = useState([])
   const [todoListState, settodoListState] = useState("TodoListStyle-Expand");
   const [handleAddTask, sethandleAddTask] = useState(false)
+  const [taskValueArray, settaskValueArray] = useState([])
+  const [addTaskValue, setaddTaskValue] = useState('')
 
   useEffect(() => {
     if (props.handleMenuBtn) {
@@ -19,16 +19,18 @@ export const TodoList = (props) => {
     e.preventDefault();
     sethandleAddTask(true)
   };
-
+  
   const handleAddTaskSubmit = (e) => {
     e.preventDefault();
-    settaskValueArray(oldValue => [...oldValue, addTaskValue])
-    props.setcollectionTaskArray( [...props.collectionTaskArray, addTaskValue])
-    props.setcollectionTaskArray2( [...props.collectionTaskArray2, addTaskValue])
+    settaskValueArray(oldState => ([...oldState , addTaskValue]))
+    for (let index = 0; index < props.addCollectionArray.length; index++) {
+      if(props.addCollectionArray[index].value === props.collectionButtonValue){
+        props.addCollectionArray[index].taskValues.push(addTaskValue)
+      }
+     }
     setaddTaskValue('')
     sethandleAddTask(false)
   }; 
-  
   if (props.collectionButtonValue==="") {
     return(
       <SelectACollection todoListState={todoListState}/>
@@ -39,7 +41,7 @@ export const TodoList = (props) => {
         <div className="TodoListElements">
           <h1>{props.collectionButtonValue}</h1>
         <AddATaskBtnState isBtnPressed={handleAddTask} setaddTaskValue={setaddTaskValue} addTaskValue={addTaskValue} handleAddTaskSubmit={handleAddTaskSubmit} handleAddTaskBtn={handleAddTaskBtn}/>
-        {taskValueArray.map((taskValueArray,i) => <TaskValueArray taskValueArray={taskValueArray} key={i}/>)}
+        {props.addCollectionArray[props.test].taskValues.map((taskValueArray,i) => <TaskValueArray taskValueArray={taskValueArray} key={i}/>)}
         </div>
       </div>
     );
@@ -77,6 +79,7 @@ const AddATaskBtnState = (props) =>{
     return(<button onClick={props.handleAddTaskBtn}>+ Add a task</button>)
   }
 }
+
 
 const AddTaskInput = (props) =>{
   return(

@@ -12,7 +12,6 @@ export const LeftBar = (props) => {
       setleftBarState("LeftBarStyle-Hide");
     }
   }, [props.handleMenuBtn]);
-
   return (
     <>
       <div className={leftBarState}>
@@ -23,14 +22,14 @@ export const LeftBar = (props) => {
           handleSubmit={props.handleSubmit}
           isBtnPressed={props.handleAddCollection}
           handleNewCollectionBtn={props.handleNewCollectionBtn}
-        />
-        {props.addCollectionArray.map((addCollectionArray, i) => (
-          <CollectionElements
-            handleCollectionBtnState={handleCollectionBtnState}
-            addCollectionArray={addCollectionArray}
-            key={i}
           />
-        ))}
+        {props.addCollectionArray.map((addCollectionArray) => (
+          <CollectionElements
+          handleCollectionBtnState={handleCollectionBtnState}
+          addCollectionArray={addCollectionArray}
+          key={addCollectionArray.id}
+          />
+          ))}
       </div>
     </>
   );
@@ -39,14 +38,13 @@ export const LeftBar = (props) => {
 const CollectionElements = (props) => {
   return (
     <button
-      value={props.addCollectionArray}
+      value={props.addCollectionArray.value}
       onClick={props.handleCollectionBtnState}
     >
-      {props.addCollectionArray}
+      {props.addCollectionArray.value}
     </button>
   );
 };
-
 const AddACollectionBtnState = (props) => {
   const isBtnPressed = props.isBtnPressed;
 

@@ -7,28 +7,37 @@ export const Menu = () => {
   const [handleMenuBtn, sethandleMenuBtn] = useState(false);
   const [addCollection, setaddCollection] = useState("");
   const [addCollectionArray, setaddCollectionArray] = useState([]);
+  const [addCollectionArrayShow, setaddCollectionArrayShow] = useState([])
   const [collectionTaskArray, setcollectionTaskArray] = useState([]);
-  const [collectionTaskArray2, setcollectionTaskArray2] = useState([]);
   const [collectionButtonValue, setcollectionButtonValue] = useState("");
   const [handleAddCollection, sethandleAddCollection] = useState(false);
+  
+  const [test, settest] = useState(0)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setaddCollectionArray((prevState) => [...prevState, addCollection]);
+    setaddCollectionArray([...addCollectionArray,{
+      id:addCollectionArray.length,
+      value:addCollection,
+      taskValues:[]
+    }]);
     sethandleAddCollection(false);
-    setaddCollection('');
-
-    for (let index = 0; index < addCollectionArray.length; index++) {
-      const collectionBtn = addCollectionArray[index];
-    }
+    setaddCollection("");
   };
-  console.log(addCollectionArray.length)
   
   const handleCollectionBtnState = (e) => {
     e.preventDefault();
     setcollectionButtonValue(e.target.value);
   };
 
+  useEffect(() => {
+    for (let index = 0; index < addCollectionArray.length; index++) {
+      if(addCollectionArray[index].value === collectionButtonValue){
+        settest(addCollectionArray[index].id)
+      }
+     }
+  }, [collectionButtonValue])
+  
   const handleNewCollectionBtn = (e) => {
     e.preventDefault();
     sethandleAddCollection(true);
@@ -38,11 +47,8 @@ export const Menu = () => {
     e.preventDefault();
     sethandleMenuBtn(!handleMenuBtn);
   };
-
-  useEffect(() => {
-  }, [collectionButtonValue])
   
-
+  
   return (
     <>
       <NavBar handleBtnState={handleBtnState} />
@@ -57,8 +63,8 @@ export const Menu = () => {
         handleCollectionBtnState={handleCollectionBtnState}
       />
       <TodoList
-      collectionTaskArray2={collectionTaskArray2}
-      setcollectionTaskArray2={setcollectionTaskArray2}
+      test={test}
+        addCollectionArray={addCollectionArray}
         collectionTaskArray={collectionTaskArray}
         setcollectionTaskArray={setcollectionTaskArray}
         collectionButtonValue={collectionButtonValue}
