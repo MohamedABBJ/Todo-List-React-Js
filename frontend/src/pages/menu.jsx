@@ -7,7 +7,6 @@ export const Menu = () => {
   const [handleMenuBtn, sethandleMenuBtn] = useState(false);
   const [addCollection, setaddCollection] = useState("");
   const [addCollectionArray, setaddCollectionArray] = useState([]);
-  const [addCollectionArrayShow, setaddCollectionArrayShow] = useState([])
   const [collectionTaskArray, setcollectionTaskArray] = useState([]);
   const [collectionButtonValue, setcollectionButtonValue] = useState("");
   const [handleAddCollection, sethandleAddCollection] = useState(false);
