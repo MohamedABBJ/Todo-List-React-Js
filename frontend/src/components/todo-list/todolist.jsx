@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DropDownMenu } from "./dropdown/dropdown";
-import { EditWindow } from "./dropdown/windows/edit-window";
+import { EditWindow } from "./dropdown/modals/edit-modal";
 import "./todolist.css";
 
 export const TodoList = (props) => {

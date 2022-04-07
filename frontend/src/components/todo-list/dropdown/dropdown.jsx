@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { EditWindow } from "./windows/edit-window";
-import "./windows/windows.css";
+import "./modals/dropdown.css";
 
 export const DropDownMenu = (props) => {
     return (
