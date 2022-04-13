@@ -1,0 +1,15 @@
+.modalStyle{
+    position: absolute;
+    border: solid black;
+    top: 40%;
+    left: 35%;
+    width: 30%;
+    height: 15%;
+}
+
+.modalStyle > .modalElements{
+    position: relative;
+    text-align: center;
+}
+
+

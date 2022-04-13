@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DropDownMenu } from "./dropdown/dropdown";
+import { DeleteWindow } from "./dropdown/modals/delete-modal";
 import { EditWindow } from "./dropdown/modals/edit-modal";
 import "./todolist.css";
 
@@ -10,7 +11,7 @@ export const TodoList = (props) => {
 
   const addCollectionArray = props.addCollectionArray
 
-
+  
   useEffect(() => {
     if (props.handleMenuBtn) {
       settodoListState("TodoListStyle-Collapse");
@@ -35,6 +36,7 @@ export const TodoList = (props) => {
     setaddTaskValue("");
     sethandleAddTask(false);
   };
+
   if (props.collectionButtonValue === "") {
     return <SelectACollection todoListState={todoListState} />;
   } else {
@@ -83,6 +85,8 @@ const SelectACollection = (props) => {
 };
 
 const AddATaskBtnState = (props) => {
+  const [isEditModalActive, setIsEditModalActive] = useState(false)
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false)
   const [isActive, setIsActive] = useState(false);
   const [isEditActive, setisEditActive] = useState(false)
   const dropdownRef = useRef(null);
@@ -94,6 +98,7 @@ const AddATaskBtnState = (props) => {
 
   const handleIsActive = () => setIsActive(!isActive);
 
+  console.log(isEditActive)
   const handleEditBtn = () =>{
     setisEditActive(!isEditActive)
    }
@@ -130,14 +135,20 @@ const AddATaskBtnState = (props) => {
             ref={dropdownRef}
             className={`menu ${isActive ? "show" : "hide"}`}
           >
-            <DropDownMenu handleEditBtn={handleEditBtn} isEditActive={isEditActive}/>
+            <DropDownMenu setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} handleEditBtn={handleEditBtn} isEditActive={isEditActive}/>
           </div>
         </div>
 
-        {isEditActive ? 
-        <div className="showEditWindow">
-          <EditWindow setcollectionButtonValue = {props.setcollectionButtonValue} collectionButtonValue = {props.collectionButtonValue} addCollectionArray={addCollectionArray} editTaskCollectionValue={props.editTaskCollectionValue} seteditTaskCollectionValue={props.seteditTaskCollectionValue}/>
+        {isEditModalActive ? 
+        <div>
+          <EditWindow  setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} setcollectionButtonValue = {props.setcollectionButtonValue} collectionButtonValue = {props.collectionButtonValue} addCollectionArray={addCollectionArray} editTaskCollectionValue={props.editTaskCollectionValue} seteditTaskCollectionValue={props.seteditTaskCollectionValue}/>
         </div> : "" }
+        
+        {isDeleteModalActive ? 
+        <div>
+          <DeleteWindow/>
+        </div> : "" }
+
       </>
     );
   }

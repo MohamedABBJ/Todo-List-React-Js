@@ -1,9 +1,10 @@
 import { useState } from "react";
+import Modal from "react-modal";
+import "./modal-style.css"
+
+Modal.setAppElement("#root")
 
 export const EditWindow = (props) => {
-
-    const [isEditWindowActive, setisEditWindowActive] = useState(true)
-
   const handleEditTaskSubmit = (e) => {
     e.preventDefault();
     for (let index = 0; index < props.addCollectionArray.length; index++) {
@@ -12,17 +13,16 @@ export const EditWindow = (props) => {
         ) {
           props.addCollectionArray[index].value = props.editTaskCollectionValue
           props.setcollectionButtonValue(props.editTaskCollectionValue)
-          setisEditWindowActive(!isEditWindowActive)
         }
       }
-
+    props.setIsEditModalActive(false)
 };
 
-console.log(isEditWindowActive)
-if(isEditWindowActive){
+if(props.isEditModalActive){
     return (
       <>
-        <div className="editWindowStyle">
+        <Modal className="modalStyle" isOpen={props.isEditModalActive}>
+          <div className="modalElements">
           <p>Please rename the collection to the new one</p>
           <form onSubmit={handleEditTaskSubmit}>
             <input
@@ -30,9 +30,10 @@ if(isEditWindowActive){
               value={props.editTaskCollectionValue}
               onChange={(e) => props.seteditTaskCollectionValue(e.target.value)}
             />
-            <input type="submit" value="edit" />
+            <input type="submit" value="edit"/>
           </form>
-        </div>
+          </div>
+        </Modal>
       </>
     );}
     else{
