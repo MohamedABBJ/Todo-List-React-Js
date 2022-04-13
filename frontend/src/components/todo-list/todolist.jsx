@@ -146,7 +146,7 @@ const AddATaskBtnState = (props) => {
         
         {isDeleteModalActive ? 
         <div>
-          <DeleteWindow/>
+          <DeleteWindow setIsDeleteModalActive={setIsDeleteModalActive}/>
         </div> : "" }
 
       </>
