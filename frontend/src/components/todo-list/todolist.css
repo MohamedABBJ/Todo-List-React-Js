@@ -20,3 +20,21 @@
 .TodoListElements{
     text-align: center;
 }
+.dropDownContainer{
+    border: solid black;
+    position: absolute;
+    width: 100px;
+    right: 250px;
+    top: 20px;
+}
+
+.menu{
+    visibility: hidden;
+}
+.menu.show{
+    opacity: 1;
+    visibility: visible;
+}
+.menu button{
+    width: 100px;
+}

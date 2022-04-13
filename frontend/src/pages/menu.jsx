@@ -4,10 +4,10 @@ import { NavBar } from "../components/navbar/navbar";
 import { TodoList } from "../components/todo-list/todolist";
 
 export const Menu = () => {
+  const [editTaskCollectionValue, seteditTaskCollectionValue] = useState("")
   const [handleMenuBtn, sethandleMenuBtn] = useState(false);
   const [addCollection, setaddCollection] = useState("");
   const [addCollectionArray, setaddCollectionArray] = useState([]);
-  const [addCollectionArrayShow, setaddCollectionArrayShow] = useState([])
   const [collectionTaskArray, setcollectionTaskArray] = useState([]);
   const [collectionButtonValue, setcollectionButtonValue] = useState("");
   const [handleAddCollection, sethandleAddCollection] = useState(false);
@@ -24,19 +24,21 @@ export const Menu = () => {
     sethandleAddCollection(false);
     setaddCollection("");
   };
-  
+
   const handleCollectionBtnState = (e) => {
     e.preventDefault();
     setcollectionButtonValue(e.target.value);
+    console.log(addCollectionArray)
   };
-
+  
+  
   useEffect(() => {
     for (let index = 0; index < addCollectionArray.length; index++) {
       if(addCollectionArray[index].value === collectionButtonValue){
         settest(addCollectionArray[index].id)
       }
      }
-  }, [collectionButtonValue])
+  }, [collectionButtonValue, addCollectionArray])
   
   const handleNewCollectionBtn = (e) => {
     e.preventDefault();
@@ -63,7 +65,10 @@ export const Menu = () => {
         handleCollectionBtnState={handleCollectionBtnState}
       />
       <TodoList
-      test={test}
+      setcollectionButtonValue={setcollectionButtonValue}
+      editTaskCollectionValue={editTaskCollectionValue}
+      seteditTaskCollectionValue={seteditTaskCollectionValue}
+        test={test}
         addCollectionArray={addCollectionArray}
         collectionTaskArray={collectionTaskArray}
         setcollectionTaskArray={setcollectionTaskArray}
