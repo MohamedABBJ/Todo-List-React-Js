@@ -57,9 +57,10 @@ export const TodoList = (props) => {
             setcollectionButtonValue = {props.setcollectionButtonValue}
             settest={props.settest}
           />
+          
           {props.addCollectionArray[props.test].taskValues?.map(
             (taskValueArray, i) => (
-              <TaskValueArray taskValueArray={taskValueArray} key={i} />
+              <TaskValueArray taskValueArray={taskValueArray} key={props.test} />
             )
           )}
         </div>
@@ -67,6 +68,7 @@ export const TodoList = (props) => {
     );
   }
 };
+//Theres an error in the key value, when the use deletes a collection and adds it again the key value duplicates and says it in the console, fixing this later
 const TaskValueArray = (props) => {
   return (
     <div>
