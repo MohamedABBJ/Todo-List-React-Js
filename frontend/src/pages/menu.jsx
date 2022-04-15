@@ -28,14 +28,12 @@ export const Menu = () => {
   const handleCollectionBtnState = (e) => {
     e.preventDefault();
     setcollectionButtonValue(e.target.value);
-    console.log(addCollectionArray)
   };
   
-  
   useEffect(() => {
-    for (let index = 0; index < addCollectionArray.length; index++) {
+    for (let index = 0; index < addCollectionArray.length ; index++) {
       if(addCollectionArray[index].value === collectionButtonValue){
-        settest(addCollectionArray[index].id)
+        settest(index)
       }
      }
   }, [collectionButtonValue, addCollectionArray])
@@ -65,6 +63,7 @@ export const Menu = () => {
         handleCollectionBtnState={handleCollectionBtnState}
       />
       <TodoList
+      settest={settest}
       setcollectionButtonValue={setcollectionButtonValue}
       editTaskCollectionValue={editTaskCollectionValue}
       seteditTaskCollectionValue={seteditTaskCollectionValue}

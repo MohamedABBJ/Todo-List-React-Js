@@ -36,8 +36,8 @@ export const TodoList = (props) => {
     setaddTaskValue("");
     sethandleAddTask(false);
   };
-
-  if (props.collectionButtonValue === "") {
+  console.log(props.test)
+  if (props.collectionButtonValue === "" || props.collectionButtonValue === undefined) {
     return <SelectACollection todoListState={todoListState} />;
   } else {
     return (
@@ -55,10 +55,12 @@ export const TodoList = (props) => {
             editTaskCollectionValue={props.editTaskCollectionValue}
             seteditTaskCollectionValue={props.seteditTaskCollectionValue}
             setcollectionButtonValue = {props.setcollectionButtonValue}
+            settest={props.settest}
           />
-          {props.addCollectionArray[props.test].taskValues.map(
+          
+          {props.addCollectionArray[props.test].taskValues?.map(
             (taskValueArray, i) => (
-              <TaskValueArray taskValueArray={taskValueArray} key={i} />
+              <TaskValueArray taskValueArray={taskValueArray} key={props.test} />
             )
           )}
         </div>
@@ -66,6 +68,7 @@ export const TodoList = (props) => {
     );
   }
 };
+//Theres an error in the key value, when the use deletes a collection and adds it again the key value duplicates and says it in the console, fixing this later
 const TaskValueArray = (props) => {
   return (
     <div>
@@ -98,7 +101,6 @@ const AddATaskBtnState = (props) => {
 
   const handleIsActive = () => setIsActive(!isActive);
 
-  console.log(isEditActive)
   const handleEditBtn = () =>{
     setisEditActive(!isEditActive)
    }
@@ -135,7 +137,7 @@ const AddATaskBtnState = (props) => {
             ref={dropdownRef}
             className={`menu ${isActive ? "show" : "hide"}`}
           >
-            <DropDownMenu setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} handleEditBtn={handleEditBtn} isEditActive={isEditActive}/>
+            <DropDownMenu setIsDeleteModalActive={setIsDeleteModalActive} setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} handleEditBtn={handleEditBtn} isEditActive={isEditActive}/>
           </div>
         </div>
 
@@ -146,7 +148,7 @@ const AddATaskBtnState = (props) => {
         
         {isDeleteModalActive ? 
         <div>
-          <DeleteWindow/>
+          <DeleteWindow settest = {props.settest} isDeleteModalActive = {isDeleteModalActive} setIsDeleteModalActive={setIsDeleteModalActive} setcollectionButtonValue = {props.setcollectionButtonValue} collectionButtonValue = {props.collectionButtonValue} addCollectionArray={addCollectionArray} editTaskCollectionValue={props.editTaskCollectionValue} seteditTaskCollectionValue={props.seteditTaskCollectionValue}/>
         </div> : "" }
 
       </>
