@@ -8,10 +8,10 @@ export const TodoList = (props) => {
   const [todoListState, settodoListState] = useState("TodoListStyle-Expand");
   const [handleAddTask, sethandleAddTask] = useState(false);
   const [addTaskValue, setaddTaskValue] = useState("");
+  const [checkBoxState, setCheckBoxState] = useState(false);
+  const [checkBoxValue, setCheckBoxValue] = useState([]);
+  const addCollectionArray = props.addCollectionArray;
 
-  const addCollectionArray = props.addCollectionArray
-
-  
   useEffect(() => {
     if (props.handleMenuBtn) {
       settodoListState("TodoListStyle-Collapse");
@@ -36,8 +36,11 @@ export const TodoList = (props) => {
     setaddTaskValue("");
     sethandleAddTask(false);
   };
-  console.log(props.test)
-  if (props.collectionButtonValue === "" || props.collectionButtonValue === undefined) {
+  console.log(checkBoxValue);
+  if (
+    props.collectionButtonValue === "" ||
+    props.collectionButtonValue === undefined
+  ) {
     return <SelectACollection todoListState={todoListState} />;
   } else {
     return (
@@ -54,15 +57,29 @@ export const TodoList = (props) => {
             collectionButtonValue={props.collectionButtonValue}
             editTaskCollectionValue={props.editTaskCollectionValue}
             seteditTaskCollectionValue={props.seteditTaskCollectionValue}
-            setcollectionButtonValue = {props.setcollectionButtonValue}
+            setcollectionButtonValue={props.setcollectionButtonValue}
             settest={props.settest}
           />
-          
+          <h2>Tasks</h2>
           {props.addCollectionArray[props.test].taskValues?.map(
             (taskValueArray, i) => (
-              <TaskValueArray taskValueArray={taskValueArray} key={props.test} />
+              <TaskValueArray
+                checkBoxState={checkBoxState}
+                setCheckBoxValue={setCheckBoxValue}
+                setCheckBoxState={setCheckBoxState}
+                taskValueArray={taskValueArray}
+                key={i}
+              />
             )
           )}
+          {checkBoxState ? (
+            <TaskValueArrayCompleted
+              taskValueArray={props.taskValueArray}
+              checkBoxState={checkBoxState}
+              checkBoxValue={checkBoxValue}
+              addCollectionArray={props.addCollectionArray}
+            />
+          ) : null}
         </div>
       </div>
     );
@@ -70,11 +87,25 @@ export const TodoList = (props) => {
 };
 //Theres an error in the key value, when the use deletes a collection and adds it again the key value duplicates and says it in the console, fixing this later
 const TaskValueArray = (props) => {
+
   return (
-    <div>
+    <div className="taskValues">
+      <input
+        type="checkbox"
+        name={props.taskValueArray}
+        value={props.taskValueArray}
+        onChange={(e) =>{
+        props.setCheckBoxValue(props.taskValueArray)
+        props.setCheckBoxState(!props.checkBoxState)
+      }}
+      />
       <p>{props.taskValueArray}</p>
     </div>
   );
+};
+
+const TaskValueArrayCompleted = (props) => {
+  return <h2>Completed</h2>;
 };
 
 const SelectACollection = (props) => {
@@ -88,22 +119,22 @@ const SelectACollection = (props) => {
 };
 
 const AddATaskBtnState = (props) => {
-  const [isEditModalActive, setIsEditModalActive] = useState(false)
-  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false)
+  const [isEditModalActive, setIsEditModalActive] = useState(false);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [isEditActive, setisEditActive] = useState(false)
+  const [isEditActive, setisEditActive] = useState(false);
   const dropdownRef = useRef(null);
   const isBtnPressed = props.isBtnPressed;
   const handleAddTaskSubmit = props.handleAddTaskSubmit;
   const addTaskValue = props.addTaskValue;
   const setaddTaskValue = props.setaddTaskValue;
-  const addCollectionArray = props.addCollectionArray
+  const addCollectionArray = props.addCollectionArray;
 
   const handleIsActive = () => setIsActive(!isActive);
 
-  const handleEditBtn = () =>{
-    setisEditActive(!isEditActive)
-   }
+  const handleEditBtn = () => {
+    setisEditActive(!isEditActive);
+  };
 
   useEffect(() => {
     const handlePageClicked = (e) => {
@@ -137,20 +168,48 @@ const AddATaskBtnState = (props) => {
             ref={dropdownRef}
             className={`menu ${isActive ? "show" : "hide"}`}
           >
-            <DropDownMenu setIsDeleteModalActive={setIsDeleteModalActive} setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} handleEditBtn={handleEditBtn} isEditActive={isEditActive}/>
+            <DropDownMenu
+              setIsDeleteModalActive={setIsDeleteModalActive}
+              setIsEditModalActive={setIsEditModalActive}
+              isEditModalActive={isEditModalActive}
+              handleEditBtn={handleEditBtn}
+              isEditActive={isEditActive}
+            />
           </div>
         </div>
 
-        {isEditModalActive ? 
-        <div>
-          <EditWindow  setIsEditModalActive={setIsEditModalActive} isEditModalActive = {isEditModalActive} setcollectionButtonValue = {props.setcollectionButtonValue} collectionButtonValue = {props.collectionButtonValue} addCollectionArray={addCollectionArray} editTaskCollectionValue={props.editTaskCollectionValue} seteditTaskCollectionValue={props.seteditTaskCollectionValue}/>
-        </div> : "" }
-        
-        {isDeleteModalActive ? 
-        <div>
-          <DeleteWindow settest = {props.settest} isDeleteModalActive = {isDeleteModalActive} setIsDeleteModalActive={setIsDeleteModalActive} setcollectionButtonValue = {props.setcollectionButtonValue} collectionButtonValue = {props.collectionButtonValue} addCollectionArray={addCollectionArray} editTaskCollectionValue={props.editTaskCollectionValue} seteditTaskCollectionValue={props.seteditTaskCollectionValue}/>
-        </div> : "" }
+        {isEditModalActive ? (
+          <div>
+            <EditWindow
+              setIsEditModalActive={setIsEditModalActive}
+              isEditModalActive={isEditModalActive}
+              setcollectionButtonValue={props.setcollectionButtonValue}
+              collectionButtonValue={props.collectionButtonValue}
+              addCollectionArray={addCollectionArray}
+              editTaskCollectionValue={props.editTaskCollectionValue}
+              seteditTaskCollectionValue={props.seteditTaskCollectionValue}
+            />
+          </div>
+        ) : (
+          ""
+        )}
 
+        {isDeleteModalActive ? (
+          <div>
+            <DeleteWindow
+              settest={props.settest}
+              isDeleteModalActive={isDeleteModalActive}
+              setIsDeleteModalActive={setIsDeleteModalActive}
+              setcollectionButtonValue={props.setcollectionButtonValue}
+              collectionButtonValue={props.collectionButtonValue}
+              addCollectionArray={addCollectionArray}
+              editTaskCollectionValue={props.editTaskCollectionValue}
+              seteditTaskCollectionValue={props.seteditTaskCollectionValue}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </>
     );
   }
