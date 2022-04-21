@@ -19,7 +19,8 @@ export const Menu = () => {
     setaddCollectionArray([...addCollectionArray,{
       id:addCollectionArray.length,
       value:addCollection,
-      taskValues:[]
+      taskValues:[],
+      taskCompletedValues:[]
     }]);
     sethandleAddCollection(false);
     setaddCollection("");
