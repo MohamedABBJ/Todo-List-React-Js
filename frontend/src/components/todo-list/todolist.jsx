@@ -80,8 +80,11 @@ export const TodoList = (props) => {
             {props.addCollectionArray[props.test].taskCompletedValues?.map(
               (taskCompletedValueArray, i) => (
             <TaskValueArrayCompleted
-             
+            test = {props.test}
+            addCollectionArray={addCollectionArray}
               taskCompletedValueArray={taskCompletedValueArray}
+              setCheckBoxValue={setCheckBoxValue}
+              setCheckBoxState={setCheckBoxState}
               checkBoxState={checkBoxState}
               checkBoxValue={checkBoxValue}
               key={i}
@@ -98,14 +101,12 @@ export const TodoList = (props) => {
 //Theres an error in the key value, when the use deletes a collection and adds it again the key value duplicates and says it in the console, fixing this later
 const TaskValueArray = (props) => {
   const handleCheckboxSubmit = () =>{
+    console.log("a")
     if(props.checkBoxState === true){
       for (let index = 0; index < props.addCollectionArray[props.test].taskCompletedValues.length; index++) {
-        console.log(props.addCollectionArray[props.test].taskCompletedValues[index])
-        console.log(index)
       }
       props.addCollectionArray[props.test].taskCompletedValues.push(props.addCollectionArray[0].taskValues[0])
       props.addCollectionArray[props.test].taskValues.splice(0,1)
-      props.setCheckBoxState(false)
     }
   }
 
@@ -127,6 +128,13 @@ const TaskValueArray = (props) => {
 };
 
 const TaskValueArrayCompleted = (props) => {
+  console.log()
+  const handleCheckboxunSubmit = () =>{
+    props.addCollectionArray[props.test].taskValues.push(props.addCollectionArray[0].taskCompletedValues[0])
+    props.addCollectionArray[props.test].taskCompletedValues.splice(0,1)
+  }
+  console.log(props.addCollectionArray)
+
   return (  
     <div className="taskValues">
        <input
@@ -134,9 +142,10 @@ const TaskValueArrayCompleted = (props) => {
         name={props.taskValueArray}
         value={props.taskValueArray}
         checked={true}
+        onClick={handleCheckboxunSubmit}
         onChange={(e) =>{
-        props.setCheckBoxValue(props.taskValueArray)
-        props.setCheckBoxState(!props.checkBoxState)
+          props.setCheckBoxValue(props.taskValueArray)
+          props.setCheckBoxState(!props.checkBoxState)
       }}
       />
       <p>{props.taskCompletedValueArray}</p>
