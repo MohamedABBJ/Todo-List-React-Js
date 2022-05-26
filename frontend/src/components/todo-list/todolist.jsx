@@ -8,10 +8,10 @@ export const TodoList = (props) => {
   const [todoListState, settodoListState] = useState("TodoListStyle-Expand");
   const [handleAddTask, sethandleAddTask] = useState(false);
   const [addTaskValue, setaddTaskValue] = useState("");
-  const [checkBoxState, setCheckBoxState] = useState(true);
-  const [checkBoxValue, setCheckBoxValue] = useState([]);
+  const [checkBoxValue, setCheckBoxValue] = useState(false);
   const addCollectionArray = props.addCollectionArray;
 
+  console.log(addCollectionArray)
 
   useEffect(() => {
     if (props.handleMenuBtn) {
@@ -20,7 +20,7 @@ export const TodoList = (props) => {
       settodoListState("TodoListStyle-Expand");
     }
   }, [props.handleMenuBtn]);
-
+  
   const handleAddTaskBtn = (e) => {
     e.preventDefault();
     sethandleAddTask(true);
@@ -29,16 +29,16 @@ export const TodoList = (props) => {
     e.preventDefault();
     for (let index = 0; index < props.addCollectionArray.length; index++) {
       if (
-        props.addCollectionArray[index].value === props.collectionButtonValue
+        props.addCollectionArray[index].value === props.collectionButtonValue 
         ) {
-          props.addCollectionArray[index].taskValues.push(addTaskValue);
+          props.addCollectionArray[index].taskValues.push({value:addTaskValue,checkBoxState:false,status:"Pending"});
         }
       }
+      
       setaddTaskValue("");
       sethandleAddTask(false);
     };
-    
-
+  
   if (
     props.collectionButtonValue === "" ||
     props.collectionButtonValue === undefined
@@ -63,34 +63,19 @@ export const TodoList = (props) => {
             settest={props.settest}
           />
           <h2>Tasks</h2>
-          {props.addCollectionArray[props.test].taskValues?.map(
-            (taskValueArray, i) => (
+          {props.addCollectionArray[props.test].taskValues.map((
+            {value, checkBoxState, i}) => (
               <TaskValueArray
               test = {props.test}
               addCollectionArray={addCollectionArray}
                 checkBoxState={checkBoxState}
                 setCheckBoxValue={setCheckBoxValue}
-                setCheckBoxState={setCheckBoxState}
-                taskValueArray={taskValueArray}
+                value={value}
                 key={i}
+                setaddCollectionArray={props.setaddCollectionArray}
               />
-            )
-          )}
+            ))}
           <h2>Completed</h2>
-            {props.addCollectionArray[props.test].taskCompletedValues?.map(
-              (taskCompletedValueArray, i) => (
-            <TaskValueArrayCompleted
-            test = {props.test}
-            addCollectionArray={addCollectionArray}
-              taskCompletedValueArray={taskCompletedValueArray}
-              setCheckBoxValue={setCheckBoxValue}
-              setCheckBoxState={setCheckBoxState}
-              checkBoxState={checkBoxState}
-              checkBoxValue={checkBoxValue}
-              key={i}
-            />
-              ))
-          }
         </div>
       </div>
     );
@@ -101,39 +86,30 @@ export const TodoList = (props) => {
 //Theres an error in the key value, when the use deletes a collection and adds it again the key value duplicates and says it in the console, fixing this later
 const TaskValueArray = (props) => {
   const handleCheckboxSubmit = () =>{
-    console.log("a")
-    if(props.checkBoxState === true){
-      for (let index = 0; index < props.addCollectionArray[props.test].taskCompletedValues.length; index++) {
+        
       }
-      props.addCollectionArray[props.test].taskCompletedValues.push(props.addCollectionArray[0].taskValues[0])
-      props.addCollectionArray[props.test].taskValues.splice(0,1)
-    }
-  }
 
   return (
     <div className="taskValues">
       <input
         type="checkbox"
-        name={props.taskValueArray}
-        value={props.taskValueArray}
+        value={props.value}
         onClick={handleCheckboxSubmit}
+        checked={true}
         onChange={(e) =>{
-        props.setCheckBoxValue(props.taskValueArray)
-        props.setCheckBoxState(!props.checkBoxState)
+          props.addCollectionArray[0].taskValues[0].checkBoxState = true
       }}
       />
-      <p>{props.taskValueArray}</p>
+      <p>{props.value}</p>
     </div>
   );
 };
 
+
+
 const TaskValueArrayCompleted = (props) => {
-  console.log()
   const handleCheckboxunSubmit = () =>{
-    props.addCollectionArray[props.test].taskValues.push(props.addCollectionArray[0].taskCompletedValues[0])
-    props.addCollectionArray[props.test].taskCompletedValues.splice(0,1)
   }
-  console.log(props.addCollectionArray)
 
   return (  
     <div className="taskValues">

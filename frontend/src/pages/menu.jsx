@@ -11,16 +11,17 @@ export const Menu = () => {
   const [collectionTaskArray, setcollectionTaskArray] = useState([]);
   const [collectionButtonValue, setcollectionButtonValue] = useState("");
   const [handleAddCollection, sethandleAddCollection] = useState(false);
+
   
   const [test, settest] = useState(0)
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setaddCollectionArray([...addCollectionArray,{
       id:addCollectionArray.length,
       value:addCollection,
       taskValues:[],
-      taskCompletedValues:[]
     }]);
     sethandleAddCollection(false);
     setaddCollection("");
@@ -68,6 +69,7 @@ export const Menu = () => {
       setcollectionButtonValue={setcollectionButtonValue}
       editTaskCollectionValue={editTaskCollectionValue}
       seteditTaskCollectionValue={seteditTaskCollectionValue}
+      setaddCollectionArray={setaddCollectionArray}
         test={test}
         addCollectionArray={addCollectionArray}
         collectionTaskArray={collectionTaskArray}
